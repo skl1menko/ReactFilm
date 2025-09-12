@@ -1,0 +1,45 @@
+.character-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px 20px;
+  background-color: #1a1a1a;
+}
+
+.character-container {
+  width: 100%;
+  max-width: 1000px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 15px;
+  padding: 30px;
+  box-shadow: 0 0 30px rgba(238, 255, 1, 0.1);
+}
+
+.character-content {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+}
+
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .character-content {
+    flex-direction: column;
+    align-items: center;
+  }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+

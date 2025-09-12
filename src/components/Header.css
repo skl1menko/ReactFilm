@@ -1,0 +1,147 @@
+.header-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: black;
+    width: 100%;
+    padding-bottom: 10px;
+}
+
+.st-logo img {
+    width: 124px;
+    height: 124px;
+}
+
+/* NavBar */
+.navbar {
+    background-color: black;
+    padding-bottom: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-link {
+    position: relative;
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+    font-family: 'Orbitron', sans-serif;
+    padding-bottom: 5px;
+    transition: color 0.3s ease;
+}
+
+/* Псевдоелемент для підкреслення */
+.nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -3px;
+    width: 0; /* Спочатку ширина 0 */
+    height: 4px;
+    background-color: transparent;
+    transition: all 0.3s ease;
+    box-shadow: none;
+    border-radius: 2px;
+}
+
+/* Підкреслення, яке з'являється як світловий меч */
+.nav-links li:nth-child(1) .nav-link:hover::after {
+    background-color: #00ff00;
+    box-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00;
+    animation: glowGreen 0.5s forwards, pulseGreen 1.5s infinite; /* Ефект світлового меча */
+}
+
+.nav-links li:nth-child(2) .nav-link:hover::after {
+    background-color: #ff0000;
+    box-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
+    animation: glowRed 0.5s forwards, pulseRed 1.5s infinite;
+}
+
+.nav-links li:nth-child(3) .nav-link:hover::after {
+    background-color: #0000ff;
+    box-shadow: 0 0 10px #0000ff, 0 0 20px #0000ff;
+    animation: glowBlue 0.5s forwards, pulseBlue 1.5s infinite;
+}
+
+/* Анімація для світлового меча - вмикається підкреслення */
+@keyframes glowGreen {
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 100%;
+    }
+}
+
+@keyframes glowRed {
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 100%;
+    }
+}
+
+@keyframes glowBlue {
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 100%;
+    }
+}
+
+/* Пульсація для кожного кольору */
+@keyframes pulseGreen {
+    0% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+}
+
+@keyframes pulseRed {
+    0% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+}
+
+@keyframes pulseBlue {
+    0% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+}
+

@@ -1,0 +1,133 @@
+
+.subtitle {
+    margin-top: 20px;
+    font-size: 1.2rem;
+    color: rgb(238, 255, 1);
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    text-shadow: 0 0 10px rgba(238, 255, 1, 0.3);
+  }
+  
+  .character-scroll-container {
+    position: relative;
+    padding: 0 40px;
+    margin: 20px 0;
+  }
+  
+  .scroll-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(238, 255, 1, 0.2);
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+  }
+  
+  .scroll-button:hover {
+    background: rgba(238, 255, 1, 0.4);
+  }
+  
+  .scroll-button.left {
+    left: 0;
+  }
+  
+  .scroll-button.right {
+    right: 0;
+  }
+  
+  .character-list {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding: 20px 0;
+    margin: 0;
+    list-style: none;
+    gap: 1rem;
+    scroll-behavior: smooth;
+    
+    /* Firefox scrollbar */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(238, 255, 1, 0.3) rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Chrome, Safari, Edge scrollbar */
+  .character-list::-webkit-scrollbar {
+    height: 4px;
+    width: 4px;
+  }
+  
+  .character-list::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+  }
+  
+  .character-list::-webkit-scrollbar-thumb {
+    background: rgba(238, 255, 1, 0.3);
+    border-radius: 4px;
+    transition: background 0.3s ease;
+  }
+  
+  .character-list::-webkit-scrollbar-thumb:hover {
+    background: rgba(238, 255, 1, 0.5);
+  }
+  
+  .character-list li {
+    flex: 0 0 auto;
+    width: 150px;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 12px;
+    padding: 10px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .character-list li:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(238, 255, 1, 0.2);
+  }
+  
+  .character-list img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 8px;
+    border: 3px solid rgba(238, 255, 1, 0.3);
+    transition: border-color 0.2s ease;
+  }
+  
+  .character-list li:hover img {
+    border-color: rgba(238, 255, 1, 0.6);
+  }
+  
+  .character-link {
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.9rem;
+    display: block;
+    padding: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: color 0.2s ease;
+  }
+  
+  .character-link:hover {
+    color: rgb(238, 255, 1);
+  }
+  
+  .char-cont {
+    padding: 20px;
+  }
+  
+  

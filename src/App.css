@@ -1,0 +1,30 @@
+/* Скидання відступів */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; 
+}
+
+html, body {
+    background: #1a1a1a;
+    font-family: "JetBrains Mono", monospace;
+    
+}
+::-webkit-scrollbar {
+  width: 10px;              /* ширина вертикального скролбара */
+  height: 10px;             /* висота горизонтального скролбара */
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;      /* фон треку (доріжки) */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;         /* колір повзунка */
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;         /* колір при наведенні */
+}

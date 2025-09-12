@@ -1,0 +1,33 @@
+.character-image-container {
+  display: flex;
+  flex: 0 0 auto;
+  width: 300px;
+  margin-top: 100px;
+
+}
+
+.character-image {
+  width: 320px !important;
+  height: 300px !important;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 8px;
+  border: 3px solid rgba(238, 255, 1, 0.3);
+
+}
+
+.character-image:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 25px rgba(238, 255, 1, 0.3);
+}
+
+@media (max-width: 768px) {
+  .character-image-container {
+    width: 250px;
+    margin-bottom: 20px;
+  }
+
+  .character-image {
+    height: 350px;
+  }
+}
