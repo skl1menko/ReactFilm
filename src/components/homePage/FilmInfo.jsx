@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchFilms } from "../../features/films/filmsSlice";
 import './FilmInfo.css';
-import { Link } from "react-router"; 
+import { Link } from "react-router";
 import filmImages from '../../assets/filmImages';
 const FilmInfo = () => {
     const dispatch = useDispatch();
