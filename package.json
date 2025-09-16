@@ -7,17 +7,12 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
-  },
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "lint": "eslint .",
     "preview": "vite preview",
     "start": "node server.js"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.8.1",
+    "better-sqlite3": "^12.2.0",
     "cors": "^2.8.5",
     "express": "^5.1.0",
     "framer-motion": "^12.12.1",
