@@ -4,9 +4,9 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 export const fetchCharacterById = createAsyncThunk(
   'character/fetchCharacterById',
   async (id) => {
-    const res = await fetch(`https://swapi.tech/api/people/${id}`);
+    const res = await fetch(`http://localhost:3001/people/${id}`);
     const data = await res.json();
-    return data.result.properties;
+    return data;
   }
 );
 

@@ -2,19 +2,19 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 // thunk для загрузки персонажей
 export const fetchAllCharacters = createAsyncThunk('film/fetchAllCharacters', async () => {
-  const res = await fetch('https://www.swapi.tech/api/people?page=2&limit=83');
+  const res = await fetch('http://localhost:3001/people');
   const data = await res.json();
-  return data.results.map(person => ({
-    id: person.uid,
+  return data.map(person => ({
+    id: person.id,
     name: person.name
   }));
 });
 
 
 export const fetchFilmById = createAsyncThunk('film/fetchFilmById', async (id) => {
-  const res = await fetch(`https://swapi.tech/api/films/${id}`);
+  const res = await fetch(`http://localhost:3001/films/${id}`);
   const data = await res.json();
-  return data.result.properties;
+  return data;
 });
 
 const filmSlice = createSlice({

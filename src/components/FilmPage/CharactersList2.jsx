@@ -3,7 +3,7 @@ import charactersImages from '../../assets/characterImages';
 import { Link } from "react-router";
 import './CharactersList2.css';
 
-const CharactersList = ({ details, allCharacters }) => {
+const CharactersList = ({ details }) => {
     const scrollContainerRef = useRef(null);
     const BUTTON_SCROLL_AMOUNT = 400; // Pixels to scroll when clicking buttons
     const WHEEL_SCROLL_MULTIPLIER = 5;
@@ -36,12 +36,6 @@ const CharactersList = ({ details, allCharacters }) => {
         };
     }, []);
 
-    const getNameByUrl = (url) => {
-        const id = url.split('/').filter(Boolean).pop();
-        const character = allCharacters.find(c => c.id === id);
-        return character ? character.name : `Character ${id}`;
-    };
-
     return (
         <div className="char-cont">
             <h3 className="subtitle">Characters</h3>
@@ -51,11 +45,11 @@ const CharactersList = ({ details, allCharacters }) => {
                     className="character-list"
                     ref={scrollContainerRef}
                 >
-                    {details.characters?.map(url => (
-                        <li key={url}>
-                            <Link to={`/characters/${url.split('/').filter(Boolean).pop()}`} className="character-link">
-                                <img src={charactersImages[getNameByUrl(url)]} alt="" />
-                                <p>{getNameByUrl(url)}</p>
+                    {details.characters?.map(character => (
+                        <li key={character.uid}>
+                            <Link to={`/characters/${character.uid}`} className="character-link">
+                                <img src={charactersImages[character.name]} alt={character.name} />
+                                <p>{character.name}</p>
                             </Link>
                         </li>
                     ))}

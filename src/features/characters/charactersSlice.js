@@ -4,11 +4,18 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 export const fetchCharacters = createAsyncThunk(
   'characters/fetchCharacters',
   async (page = 1) => {
-    const response = await fetch(`https://swapi.tech/api/people?page=${page}&limit=10`);
+    const response = await fetch(`http://localhost:3001/people`);
     const data = await response.json();
+    
+    // Имитируем пагинацию на клиенте, так как API возвращает всех персонажей
+    const limit = 10;
+    const startIndex = (page - 1) * limit;
+    const endIndex = startIndex + limit;
+    const paginatedData = data.slice(startIndex, endIndex);
+    
     return {
-      characters: data.results,
-      nextPage: data.next ? data.next.split('=')[1] : null,
+      characters: paginatedData,
+      nextPage: endIndex < data.length ? page + 1 : null,
     };
   }
 );

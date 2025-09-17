@@ -17,18 +17,18 @@ const FilmInfo = () => {
             <h1 className="home-title">Star Wars Films</h1>
             <div className="film-container">
                 {items.map((film) => (
-                    <div key={film.uid} className="filmItem">
-                        <Link to={`/films/${film.uid}`} className="link">
+                    <div key={film.episode_id} className="filmItem">
+                        <Link to={`/films/${film.episode_id}`} className="link">
                             <div className="film-info">
                                 <img
-                                    src={filmImages[film.properties.title] || "https://example.com/default-image.jpg"}
-                                    alt={film.properties.title}
+                                    src={filmImages[film.title] || "https://example.com/default-image.jpg"}
+                                    alt={film.title}
                                     className="films-image"
                                 />
                                 <div className="film-details">
-                                    <p className="film-title">{film.properties.title}</p>
-                                    <p className="film-director">{film.properties.director}</p>
-                                    <p className="film-release">{film.properties.release_date}</p>
+                                    <p className="film-title">{film.title}</p>
+                                    <p className="film-director">{film.director}</p>
+                                    <p className="film-release">{film.release_date}</p>
                                 </div>
                             </div>
                         </Link>

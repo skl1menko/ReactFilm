@@ -20,8 +20,8 @@ const CharactersList = ({ dispatch, characters, status, currentPage }) => {
     return (
         <div className="char-ctr">
             {characters.map((character) => (
-                <div className="characterItem" key={character.uid}>
-                    <Link to={`/characters/${character.uid}`} className="link">
+                <div className="characterItem" key={character.uid || character.id}>
+                    <Link to={`/characters/${character.uid || character.id}`} className="link">
                         <div className="characters-info">
                             <img
                                 src={characterImages[character.name]}

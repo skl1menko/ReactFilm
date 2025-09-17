@@ -2,9 +2,9 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const fetchFilms = createAsyncThunk('films/fetchFilms', async () => {
-  const res = await fetch('https://swapi.tech/api/films');
+  const res = await fetch('http://localhost:3001/films');
   const data = await res.json();
-  return data.result;
+  return data;
 });
 
 const filmsSlice = createSlice({

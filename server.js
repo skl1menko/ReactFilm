@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import databaseConfig from './server/config/database.js';
 import peopleRoutes from './server/routes/people.js';
 import filmsRoutes from './server/routes/films.js';
@@ -14,6 +15,10 @@ const PORT = 3001;
 databaseConfig.initTables();
 
 // Middleware
+app.use(cors({
+  origin: 'http://localhost:5173', // Разрешаем запросы с фронтенда
+  credentials: true
+}));
 app.use(express.json());
 
 // Маршруты
