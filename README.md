@@ -46,7 +46,7 @@ cd ReactFilm
 npm install
 npm install express
 npm install better-sqlite3
-npm install core
+npm install cors
 ```
 ### 3. Инициализация базы данных
 
