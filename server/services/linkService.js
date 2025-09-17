@@ -11,57 +11,6 @@ class LinkService {
     this.swapiService = new SwapiService();
   }
 
-  // Создать базовые связи для всех эпизодов
-  async createBasicLinks() {
-    try {
-      console.log('Создаем базовые связи между персонажами и фильмами...');
-      
-      const episodeMapping = {
-        'A New Hope': 1,
-        'The Empire Strikes Back': 2,
-        'Return of the Jedi': 3,
-        'The Phantom Menace': 4,
-        'Attack of the Clones': 5,
-        'Revenge of the Sith': 6
-      };
-
-      const films = this.filmModel.getAll();
-      const allPeople = this.personModel.getAll();
-      
-      for (const film of films) {
-        console.log(`\nОбрабатываем фильм: ${film.title}`);
-        
-        for (const person of allPeople) {
-          try {
-            const personDetails = await this.swapiService.getPersonDetails(person.url);
-            
-            if (personDetails && personDetails.films) {
-              const appearsInFilm = personDetails.films.some(filmUrl => {
-                const filmId = filmUrl.split('/').filter(part => part)[4];
-                const episodeId = episodeMapping[film.title];
-                return filmId == episodeId;
-              });
-
-              if (appearsInFilm) {
-                if (!this.filmPersonModel.exists(film.episode_id, person.id)) {
-                  this.filmPersonModel.create(film.episode_id, person.id);
-                  console.log(`✓ Связь: ${person.name} ↔ ${film.title}`);
-                }
-              }
-            }
-          } catch (err) {
-            console.error(`Ошибка при обработке ${person.name}:`, err.message);
-          }
-        }
-      }
-      
-      console.log('Базовые связи созданы!');
-      return { success: true, message: 'Базовые связи созданы' };
-    } catch (err) {
-      console.error('Ошибка при создании базовых связей:', err);
-      return { success: false, error: err.message };
-    }
-  }
 
   // Создать реальные связи из SWAPI
   async createRealLinksFromSWAPI() {
@@ -93,8 +42,8 @@ class LinkService {
               for (const filmUrl of personDetails.films) {
                 const episodeId = this.extractEpisodeFromUrl(filmUrl);
                 
-                if (episodeId && !this.filmPersonModel.exists(episodeId, person.id)) {
-                  this.filmPersonModel.create(episodeId, person.id);
+                if (episodeId && !this.filmPersonModel.exists(episodeId, person.uid)) {
+                  this.filmPersonModel.create(episodeId, person.uid);
                   linksCreated++;
                   console.log(`  ✓ Связь: ${person.name} ↔ Эпизод ${episodeId}`);
                 }

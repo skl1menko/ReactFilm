@@ -40,54 +40,54 @@ class SwapiService {
     try {
       console.log('Загружаем персонажей из SWAPI...');
       
-      // Загружаем всех персонажей
-      const response = await fetch(`${this.baseUrl}/people?page=1&limit=0`);
-      const data = await response.json();
-      console.log(`Получено ${data.results.length} персонажей из SWAPI`);
-      const people = data.results;
+      // Сначала получаем первую страницу, чтобы узнать общее количество
+      let currentUrl = `${this.baseUrl}/people`;
+      let page = 1;
       
-      // Обрабатываем персонажей пачками
-      const batchSize = 5;
-      for (let i = 0; i < people.length; i += batchSize) {
-        const batch = people.slice(i, i + batchSize);
-        console.log(`Обрабатываем пачку ${Math.floor(i/batchSize) + 1}/${Math.ceil(people.length/batchSize)} (персонажи ${i+1}-${Math.min(i+batchSize, people.length)})`);
+      while (currentUrl && page <= 9) {
+        console.log(`Загружаем страницу ${page}...`);
+        console.log(`URL: ${currentUrl}`);
         
-        await Promise.all(batch.map(async (person) => {
-          if (!this.personModel.exists(person.name, person.url)) {
-            try {
-              // Получаем детальную информацию
-              const personResponse = await fetch(person.url);
-              const personData = await personResponse.json();
-              const properties = personData.result?.properties || {};
-              
+        const response = await fetch(currentUrl);
+        const data = await response.json();
+        
+        console.log(`Ответ API для страницы ${page}:`, data);
+        
+        // Проверяем структуру ответа
+        const people = data.results || data.result || [];
+        
+        if (people.length === 0) {
+          console.log(`⚠ Страница ${page}: нет персонажей`);
+          break;
+        }
+        
+        console.log(`Найдено ${people.length} персонажей на странице ${page}`);
+        
+        for (const person of people) {
+          const personName = person.name || person.properties?.name;
+          const personUrl = person.url || person.properties?.url;
+          
+          if (personName && personUrl) {
+            if (!this.personModel.exists(personName, personUrl)) {
+              // Сохраняем только базовую информацию
               this.personModel.create({
-                name: person.name,
-                url: person.url,
-                birth_year: properties.birth_year,
-                eye_color: properties.eye_color,
-                gender: properties.gender,
-                hair_color: properties.hair_color,
-                height: properties.height,
-                mass: properties.mass,
-                skin_color: properties.skin_color,
-                homeworld: properties.homeworld
+                name: personName,
+                url: personUrl
               });
-              
-              console.log(`✓ ${person.name} добавлен`);
-            } catch (err) {
-              console.error(`Ошибка при загрузке ${person.name}:`, err.message);
-              // Сохраняем базовую информацию при ошибке
-              this.personModel.createBasic(person.name, person.url);
+              console.log(`✓ Персонаж "${personName}" добавлен`);
+            } else {
+              console.log(`- Персонаж "${personName}" уже существует`);
             }
           } else {
-            console.log(`- ${person.name} уже существует`);
+            console.log(`⚠ Пропускаем персонажа без имени или URL:`, person);
           }
-        }));
-        
-        // Пауза между пачками
-        if (i + batchSize < people.length) {
-          await new Promise(resolve => setTimeout(resolve, 500));
         }
+        
+        // Получаем URL следующей страницы
+        currentUrl = data.next;
+        page++;
+        
+        console.log(`Следующая страница: ${currentUrl}`);
       }
     } catch (err) {
       console.error('Ошибка при загрузке персонажей:', err);
@@ -109,6 +109,75 @@ class SwapiService {
     } catch (err) {
       console.error(`Ошибка при получении данных с ${url}:`, err.message);
       return null;
+    }
+  }
+
+  // Загрузить и сохранить детальную информацию для конкретного персонажа
+  async loadPersonDetails(personId) {
+    try {
+      const person = this.personModel.getById(personId);
+      if (!person || !person.url) {
+        throw new Error('Персонаж не найден или нет URL');
+      }
+
+      // Если детали уже загружены, возвращаем их
+      if (person.birth_year !== null && person.birth_year !== undefined) {
+        return person;
+      }
+
+      console.log(`Загружаем детальную информацию для "${person.name}"...`);
+      const details = await this.getPersonDetails(person.url);
+      
+      if (details) {
+        // Обновляем персонажа с детальной информацией
+        const updatedPerson = this.personModel.update(personId, {
+          birth_year: details.birth_year,
+          eye_color: details.eye_color,
+          gender: details.gender,
+          hair_color: details.hair_color,
+          height: details.height,
+          mass: details.mass,
+          skin_color: details.skin_color,
+          homeworld: details.homeworld
+        });
+        
+        console.log(`✓ Детальная информация для "${person.name}" загружена`);
+        return updatedPerson;
+      }
+      
+      return person;
+    } catch (err) {
+      console.error('Ошибка при загрузке деталей персонажа:', err);
+      return null;
+    }
+  }
+
+  // Обновить детальную информацию для всех персонажей
+  async updatePeopleDetails() {
+    try {
+      console.log('Обновляем детальную информацию персонажей...');
+      const people = this.personModel.getAll();
+      
+      for (const person of people) {
+        if (person.url && !person.birth_year) { // Если детали еще не загружены
+          const details = await this.getPersonDetails(person.url);
+          if (details) {
+            this.personModel.update(person.id, {
+              birth_year: details.birth_year,
+              eye_color: details.eye_color,
+              gender: details.gender,
+              hair_color: details.hair_color,
+              height: details.height,
+              mass: details.mass,
+              skin_color: details.skin_color,
+              homeworld: details.homeworld
+            });
+            console.log(`✓ Обновлен "${person.name}"`);
+          }
+        }
+      }
+    } catch (err) {
+      console.error('Ошибка при обновлении персонажей:', err);
     }
   }
 }

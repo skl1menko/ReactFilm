@@ -28,21 +28,6 @@ router.post('/load-people', async (req, res) => {
   }
 });
 
-// POST /api/create-links - Создать базовые связи
-router.post('/create-links', async (req, res) => {
-  try {
-    const result = await linkService.createBasicLinks();
-    if (result.success) {
-      res.json(result);
-    } else {
-      res.status(500).json(result);
-    }
-  } catch (err) {
-    console.error('Ошибка при создании связей:', err);
-    res.status(500).json({ error: 'Ошибка при создании связей' });
-  }
-});
-
 // POST /api/create-real-links - Создать реальные связи из SWAPI
 router.post('/create-real-links', async (req, res) => {
   try {

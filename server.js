@@ -6,7 +6,7 @@ import apiRoutes from './server/routes/api.js';
 import Film from './server/models/Film.js';
 import People from './server/models/Person.js';
 import SwapiService from './server/services/swapiService.js';
-
+import LinkService from './server/services/linkService.js';
 const app = express();
 const PORT = 3001;
 
@@ -35,9 +35,6 @@ app.listen(PORT, () => {
   console.log('  GET  /people/:id       - конкретный персонаж');
   console.log('  GET  /films            - все фильмы');
   console.log('  GET  /films/:id        - конкретный фильм');
-  console.log('  POST /api/load-films   - загрузить фильмы из SWAPI');
-  console.log('  POST /api/load-people  - загрузить персонажей из SWAPI');
-  console.log('  POST /api/create-links - создать связи');
 });
 
 const filmModel = new Film();
@@ -45,7 +42,7 @@ const peopleModel = new People();
 const filmsCount = await filmModel.getAll().length;
 const peopleCount = await peopleModel.getAll().length;
 const swapiService = new SwapiService();
-
+const linkService = new LinkService();
  (async () => {
     if (filmsCount === 0) {
       console.log('База фильмов пуста. Загружаем фильмы из SWAPI...');
@@ -54,5 +51,9 @@ const swapiService = new SwapiService();
     if (peopleCount === 0) {
       console.log('База персонажей пуста. Загружаем персонажей из SWAPI...');
       await swapiService.loadPeople();
+    }
+    if (filmsCount === 0 || peopleCount === 0) {
+      console.log('Создаем реальные связи между персонажами и фильмами...');
+      const result = await linkService.createRealLinksFromSWAPI();
     }
   })();
