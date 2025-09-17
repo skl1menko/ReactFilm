@@ -21,7 +21,7 @@ class LinkService {
       this.filmPersonModel.recreateTable();
       console.log('Таблица связей очищена');
 
-      const allPeople = this.personModel.getWithoutFilmLinks();
+      const allPeople = this.personModel.getAll(); // Изменено: получаем ВСЕХ персонажей
       console.log(`Обрабатываем ${allPeople.length} персонажей...`);
       
       // Обрабатываем пачками для избежания блокировки API
