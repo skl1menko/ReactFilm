@@ -4,6 +4,7 @@ import databaseConfig from './server/config/database.js';
 import peopleRoutes from './server/routes/people.js';
 import filmsRoutes from './server/routes/films.js';
 import apiRoutes from './server/routes/api.js';
+import adminRoutes from './server/routes/admin.js';
 import Film from './server/models/Film.js';
 import People from './server/models/Person.js';
 import SwapiService from './server/services/swapiService.js';
@@ -30,6 +31,7 @@ app.get('/', (req, res) => {
 app.use('/people', peopleRoutes);
 app.use('/films', filmsRoutes);
 app.use('/api', apiRoutes);
+app.use('/admin', adminRoutes);
 
 // Запуск сервера
 app.listen(PORT, () => {
