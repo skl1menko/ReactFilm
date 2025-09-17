@@ -42,12 +42,12 @@ cd ReactFilm
 ```
 
 ### 2. Установка зависимостей
-
+```bash
 npm install
 npm install express
 npm install better-sqlite3
 npm install core
-
+```
 ### 3. Инициализация базы данных
 
 Запустите сервер для создания базы данных:
