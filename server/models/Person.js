@@ -156,6 +156,32 @@ class Person {
       films: person.film_titles ? person.film_titles.split(', ') : []
     }));
   }
+
+  // Обновить персонажа
+  update(uid, updateData) {
+    const fields = [];
+    const values = [];
+    
+    // Динамически строим запрос на основе переданных данных
+    Object.keys(updateData).forEach(key => {
+      if (updateData[key] !== undefined) {
+        fields.push(`${key} = ?`);
+        values.push(updateData[key]);
+      }
+    });
+    
+    if (fields.length === 0) {
+      throw new Error('Нет данных для обновления');
+    }
+    
+    values.push(uid); // добавляем uid в конец для WHERE условия
+    
+    const query = `UPDATE people SET ${fields.join(', ')} WHERE uid = ?`;
+    const result = this.db.prepare(query).run(...values);
+    
+    // Возвращаем обновленного персонажа
+    return this.getById(uid);
+  }
 }
 
 export default Person;

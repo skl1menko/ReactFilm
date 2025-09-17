@@ -162,7 +162,7 @@ class SwapiService {
         if (person.url && !person.birth_year) { // Если детали еще не загружены
           const details = await this.getPersonDetails(person.url);
           if (details) {
-            this.personModel.update(person.id, {
+            this.personModel.update(person.uid, {
               birth_year: details.birth_year,
               eye_color: details.eye_color,
               gender: details.gender,

@@ -51,6 +51,7 @@ const linkService = new LinkService();
     if (peopleCount === 0) {
       console.log('База персонажей пуста. Загружаем персонажей из SWAPI...');
       await swapiService.loadPeople();
+      await swapiService.updatePeopleDetails();
     }
     if (filmsCount === 0 || peopleCount === 0) {
       console.log('Создаем реальные связи между персонажами и фильмами...');
